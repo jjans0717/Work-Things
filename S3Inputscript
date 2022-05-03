@@ -25,4 +25,5 @@ print("\n")
 print(my_bucket_object.last_modified)   
 print("\n")
 totalsize_gb=size_byte/1024/1024/1024
+print(size_byte)
 print(totalsize_gb)
