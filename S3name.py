@@ -18,18 +18,3 @@ AllBuckets = s3.list_buckets()
 print('Existing buckets:')
 for bucket in AllBuckets['Buckets']:
     print(f'    {bucket["Name"]}')
-
-s3 = session.resource('s3')
-#initialize byte size
-size_byte=0
-
-#iterate through each bucket
-#for bucket in AllBuckets['Buckets']:
-
-my_bucket=s3.Bucket('expenterprise-uat')
-for my_bucket_object in my_bucket.objects.all():
-    #print(my_bucket_object.key)
-    size_byte=size_byte+my_bucket_object.size
-totalsize_gb=size_byte/1024/1024/1024
-print(size_byte)
-print(totalsize_gb)
