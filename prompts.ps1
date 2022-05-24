@@ -10,8 +10,8 @@ Function Show-Menu{
     $Menu = New-Object -TypeName System.Text.StringBuilder
     [void]$Menu.AppendLine("...Menu Options....")
     [void]$Menu.AppendLine("-------------------")
-    [void]$Menu.AppendLine("1. Option 1")
-    [void]$Menu.AppendLine("2. Option 2")
+    [void]$Menu.AppendLine("1. Get List of all Log Files")
+    [void]$Menu.AppendLine("2. Get List of all Files in Folder")
     [void]$Menu.AppendLine("3. List Current CPU and Memory Usage")
     [void]$Menu.AppendLine("4. Get Running Processes")
     [void]$Menu.AppendLine("5. Exit")
@@ -30,11 +30,16 @@ Try {
         {
             1 #User chose option 1 
             {
-                Write-Host 'You chose option 1'
+                #Append Date File is created
+                Get-Date | Out-file -FilePath $PSScriptroot\DailyLog.txt -Append
+                #List log files and append to DailyLog.txt
+                Get-ChildItem -Path $PSScriptRoot -Filter *.log | Out-File -FilePath $PSScriptRoot\DailyLog.txt -Append
+                
             }
             2 #User chose option 2
             {
-                'You chose option 2'
+                #List of all files in folder in Tabular format and sorted in Ascending alpahabet into C916contects.txt
+                Get-ChildItem "$PSScriptRoot" | Sort-Object Name | Format-Table -AutoSize -Wrap | Out-File -FilePath "$PSScriptRoot\C916contents.txt"
             }
             3 #List CPU and Memory usage
             {
@@ -45,6 +50,7 @@ Try {
             }
             4 #Get running processes
             {
+                #Get running process and sort them and output to Grid format
                 Get-Process | Select-Object ID, Name, VM | Sort-Object Name | Out-GridView
             }
         }
